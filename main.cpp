@@ -19,7 +19,8 @@ int main()
 
 std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector<double> &data)
 {
-    std::vector<std::vector<double>> clusters = {{10.0}, {12.0}};
+    std::vector<double> centroids = {10.0, 12.0};
+    std::vector<std::vector<double>> clusters(2);
     int iterations { };
 
     for (double point : data) {
@@ -27,7 +28,7 @@ std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector
         int closestCluster { -1 };
 
         for (int i = 0; i <= 1; ++i) {
-            double distance = abs(point - clusters[i][0]);
+            double distance = abs(point - centroids[i]);
             if (distance < minDistance) {
                 minDistance = distance;
                 closestCluster = i;
