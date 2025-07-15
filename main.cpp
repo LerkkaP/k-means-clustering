@@ -22,32 +22,32 @@ std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector
     std::vector<double> centroids = {10.0, 12.0};
     std::vector<std::vector<double>> clusters(2);
     int iterations { };
+    constexpr int MAX_ITERS { 10 };
 
-    for (double point : data) {
-        double minDistance = std::numeric_limits<double>::max();
-        int closestCluster { -1 };
+    while (iterations <= MAX_ITERS) {
+        for (double point : data) {
+            double minDistance = std::numeric_limits<double>::max();
+            int closestCluster { -1 };
 
-        for (int i = 0; i <= 1; ++i) {
-            double distance = abs(point - centroids[i]);
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestCluster = i;
-            }
-        } 
-        clusters[closestCluster].push_back(point);
-        std::cout << "The closest cluster for point " << point << " is " << closestCluster << '\n';
+            for (int i = 0; i <= 1; ++i) {
+                double distance = abs(point - centroids[i]);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestCluster = i;
+                }
+            } 
+            clusters[closestCluster].push_back(point);
+            std::cout << "The closest cluster for point " << point << " is " << closestCluster << '\n';
+        }
+
+        for (std::vector<double> cluster : clusters) {
+            double mean = std::reduce(cluster.begin(), cluster.end(), 0.0) / cluster.size();
+            std::cout << mean << '\n';
+            for (double x : cluster) std::cout << x << " ";
+                std::cout << std::endl;
+        }
+        ++iterations;
     }
 
-    for (std::vector<double> cluster : clusters) {
-        double mean = std::reduce(cluster.begin(), cluster.end(), 0.0) / cluster.size();
-        std::cout << mean << '\n';
-        for (double x : cluster) std::cout << x << " ";
-            std::cout << std::endl;
-    }
-
-    
-
-
-    
     return clusters;
 }
