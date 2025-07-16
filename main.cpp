@@ -37,17 +37,13 @@ std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector
                 }
             } 
             clusters[closestCluster].push_back(point);
-            std::cout << "The closest cluster for point " << point << " is " << closestCluster << '\n';
         }
-
+        centroids = {};
         for (std::vector<double> cluster : clusters) {
             double mean = std::reduce(cluster.begin(), cluster.end(), 0.0) / cluster.size();
-            std::cout << mean << '\n';
-            for (double x : cluster) std::cout << x << " ";
-                std::cout << std::endl;
+            centroids.push_back(mean);
         }
         ++iterations;
     }
-
     return clusters;
 }
