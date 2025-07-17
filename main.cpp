@@ -16,10 +16,14 @@ int main()
 
     std::vector<std::vector<double>> clusters { kMeansClustering(k, data) };
 
-    for (int i = 0; i <= 1; ++i) {
-        std::cout << clusters[i][0];
+    // For debugging
+    for (size_t i = 0; i < clusters.size(); ++i) {
+        std::cout << "Cluster " << i << ": ";
+        for (double val : clusters[i]) {
+            std::cout << val << ' ';
+        }
+        std::cout << '\n';
     }
-
     return 0;
 }
 
@@ -27,6 +31,7 @@ std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector
 {
     std::vector<double> centroids = {10.0, 12.0};
     std::vector<std::vector<double>> clusters(k);
+    
     int iterations { };
     constexpr int MAX_ITERS { 10 };
 
@@ -56,7 +61,7 @@ int getClosestCluster(double point, std::vector<double> centroids)
     double minDistance = std::numeric_limits<double>::max();
     int closestCluster { -1 };
 
-    for (int i = 0; i <= 1; ++i) {
+    for (int i = 0; i < centroids.size(); ++i) {
         double distance = abs(point - centroids[i]);
         if (distance < minDistance) {
             minDistance = distance;
