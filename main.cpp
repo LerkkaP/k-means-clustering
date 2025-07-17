@@ -4,6 +4,7 @@
 #include <limits>
 #include <numeric>
 
+int getClosestCluster(double point, std::vector<double> centroids);
 std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector<double> &data);
 
 int main()
@@ -13,6 +14,10 @@ int main()
     const int k { 2 };
 
     std::vector<std::vector<double>> clusters { kMeansClustering(k, data) };
+
+    for (int i = 0; i <= 1; ++i) {
+        std::cout << clusters[i][0];
+    }
 
     return 0;
 }
@@ -26,16 +31,7 @@ std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector
 
     while (iterations <= MAX_ITERS) {
         for (double point : data) {
-            double minDistance = std::numeric_limits<double>::max();
-            int closestCluster { -1 };
-
-            for (int i = 0; i <= 1; ++i) {
-                double distance = abs(point - centroids[i]);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closestCluster = i;
-                }
-            } 
+            int closestCluster = getClosestCluster(point, centroids);
             clusters[closestCluster].push_back(point);
         }
         centroids = {};
@@ -46,4 +42,19 @@ std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector
         ++iterations;
     }
     return clusters;
+}
+
+int getClosestCluster(double point, std::vector<double> centroids) 
+{
+    double minDistance = std::numeric_limits<double>::max();
+    int closestCluster { -1 };
+
+    for (int i = 0; i <= 1; ++i) {
+        double distance = abs(point - centroids[i]);
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestCluster = i;
+        }
+    }
+    return closestCluster;
 }
