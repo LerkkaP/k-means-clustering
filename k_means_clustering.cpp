@@ -1,4 +1,5 @@
-#include <iostream>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include <vector>
 #include <cmath>
 #include <limits>
@@ -7,25 +8,6 @@
 int getClosestCluster(double point, const std::vector<double> &centroids);
 double getNewCentroid(const std::vector<double> &cluster);
 std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector<double> &data);
-
-int main()
-{
-
-    std::vector<double> data = {1.0, 2.0, 3.5, 10.0, 12.0, 11.5};
-    const int k { 2 };
-
-    std::vector<std::vector<double>> clusters { kMeansClustering(k, data) };
-
-    // For debugging
-    for (size_t i = 0; i < clusters.size(); ++i) {
-        std::cout << "Cluster " << i << ": ";
-        for (double val : clusters[i]) {
-            std::cout << val << ' ';
-        }
-        std::cout << '\n';
-    }
-    return 0;
-}
 
 std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector<double> &data)
 {
@@ -74,4 +56,9 @@ int getClosestCluster(double point, const std::vector<double> &centroids)
 double getNewCentroid(const std::vector<double> &cluster) {
     double newMean = std::reduce(cluster.begin(), cluster.end(), 0.0) / cluster.size();
     return newMean;
+}
+
+PYBIND11_MODULE(kmeans, m) {
+    m.def("kMeansClustering", &kMeansClustering, "Run k-means clustering",
+          pybind11::arg("k"), pybind11::arg("data"));
 }
