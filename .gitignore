@@ -4,3 +4,5 @@ main
 /dist
 /kmeans.egg-info
 /build
+__pycache__
+*.png
