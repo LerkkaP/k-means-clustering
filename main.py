@@ -8,8 +8,8 @@ k = 2
 df = pd.read_csv("data/mall_customers.csv")
 annual_incomes = df["Annual Income (k$)"]
 
-#data = annual_incomes
-#k = 10
+data = annual_incomes
+k = 10
 
 clusters = kmeans.kMeansClustering(k, data)
 plot_clusters_1d(k, clusters)

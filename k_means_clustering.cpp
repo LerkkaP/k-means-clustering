@@ -69,15 +69,16 @@ double getNewCentroid(const std::vector<double> &cluster) {
 std::vector<double> initializeCentroids(const int k, const std::vector<double> &data)
 {
     std::vector<double> centroids{};
+    std::unordered_set<double> seen_centroids{};
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, data.size() - 1);
-    std::unordered_set<int> used_indices;
 
     while (centroids.size() < k) {
         int index = dis(gen);
-        if (used_indices.insert(index).second) {
-            centroids.push_back(data[index]);
+        double centroid = data[index];
+        if (seen_centroids.insert(centroid).second) {
+            centroids.push_back(centroid);
         }
     }
     return centroids;
