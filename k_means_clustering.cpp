@@ -5,7 +5,6 @@
 #include <limits>
 #include <numeric>
 #include <random>
-#include <iostream>
 #include <unordered_set>
 
 int getClosestCluster(double point, const std::vector<double> &centroids);
@@ -14,11 +13,7 @@ std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector
 std::vector<double> initializeCentroids(const int k, const std::vector<double> &data);
 
 std::vector<std::vector<double>> kMeansClustering(const int k, const std::vector<double> &data)
-{
-    /*for (double point : data) {
-        std::cout << point << '\n';
-    }*/
-    
+{   
     std::vector<double> centroids{initializeCentroids(k, data)};
     std::vector<std::vector<double>> clusters(k);
     
